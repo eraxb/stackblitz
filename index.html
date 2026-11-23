@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Стихия — природные катастрофы</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌪️</text></svg>">
+<style>
+:root{--ink:#0b2540;--ink2:#23405f;--glass:rgba(255,255,255,.34);--glass-b:rgba(255,255,255,.65);--acc:#1d6fd6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:"Trebuchet MS","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#0f4c9e 0%,#2e86de 30%,#7fc1f5 62%,#d9efff 100%) fixed;overflow-x:hidden}
+#sky{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.cloud{position:absolute;left:0;background:#fff;border-radius:999px;will-change:transform;animation:drift linear infinite}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud::before{width:50%;height:190%;left:14%;top:-85%}
+.cloud::after{width:38%;height:150%;right:12%;top:-55%}
+@keyframes drift{from{transform:translateX(-45vw)}to{transform:translateX(115vw)}}
+main{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:44px 20px 60px}
+header{text-align:center;margin-bottom:34px}
+h1{font-size:clamp(2.4rem,7vw,4.2rem);margin:0;letter-spacing:.02em;color:#fff;text-shadow:0 2px 18px rgba(8,40,90,.45)}
+.sub{margin:10px auto 0;max-width:34em;font-size:clamp(1rem,2.6vw,1.2rem);color:#fff;text-shadow:0 1px 10px rgba(8,40,90,.5)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.btn{font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;border-radius:22px;border:1px solid var(--glass-b);background:var(--glass);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);box-shadow:0 6px 20px rgba(10,50,110,.18);transition:transform .25s ease,box-shadow .25s ease,background .25s ease}
+.btn .ic{font-size:2.5rem;line-height:1}
+.btn .nm{font-weight:700;font-size:.98rem;text-align:center}
+.btn:hover{transform:translateY(-4px) scale(1.05);background:rgba(255,255,255,.55);box-shadow:0 10px 30px rgba(10,50,110,.28),0 0 24px rgba(255,255,255,.8)}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.btn.on{background:rgba(255,255,255,.88);border-color:#fff;transform:translateY(-3px);box-shadow:0 0 0 3px var(--acc),0 10px 30px rgba(10,50,110,.3)}
+#card{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;transition:grid-template-rows .5s ease,opacity .4s ease,margin-top .5s ease}
+#card.open{grid-template-rows:1fr;opacity:1;margin-top:26px}
+#card>.wrap{overflow:hidden;min-height:0}
+.panel{position:relative;padding:28px 30px 30px;border-radius:26px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid #fff;box-shadow:0 14px 44px rgba(10,50,110,.3)}
+.panel h2{margin:0 44px 6px 0;font-size:clamp(1.6rem,4vw,2.2rem)}
+.panel h2 span{margin-right:10px}
+.lead{margin:0 0 20px;color:var(--ink2);font-size:1.08rem;line-height:1.55}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px}
+h3{margin:0 0 6px;font-size:1.05rem;color:var(--acc)}
+.panel p,.panel li{line-height:1.55;color:var(--ink2);font-size:1rem}
+.panel p{margin:0}
+.panel ul{margin:0;padding-left:1.1em}
+.panel li+li{margin-top:4px}
+.fact{grid-column:1/-1;padding:14px 18px;border-radius:16px;background:#e4f1ff;border-left:5px solid var(--acc)}
+.x{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;border:0;cursor:pointer;font-size:1.3rem;color:var(--ink);background:#e4f1ff;transition:background .2s,transform .2s}
+.x:hover{background:#cfe5fb;transform:rotate(90deg)}
+.x:focus-visible{outline:3px solid var(--acc)}
+@media(max-width:820px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){
+main{padding:30px 12px 40px}
+.grid{grid-template-columns:repeat(2,1fr);gap:10px}
+.cols{grid-template-columns:1fr}
+.panel{padding:22px 18px 24px;border-radius:22px}
+#card.open{margin-left:-4px;margin-right:-4px}
+}
+@media(prefers-reduced-motion:reduce){.cloud{animation-duration:400s!important}#card,.btn,.x{transition:none}}
+</style>
+</head>
+<body>
+<div id="sky" aria-hidden="true"></div>
+<main>
+<header>
+<h1>Природные Бедствия</h1>
+<p class="sub">Справочник</p>
+</header>
+<div class="grid" id="grid"></div>
+<section id="card" aria-live="polite"><div class="wrap"><div class="panel" id="panel"></div></div></section>
+</main>
+<script>
+const D=[
+{k:"quake",i:"🌍",n:"Землетрясение",d:"Резкие колебания земной коры, вызванные высвобождением энергии в разломах. Длятся от секунд до нескольких минут.",c:["Движение тектонических плит","Накопление напряжения в разломах","Реже: вулканы и обрушения пород"],e:["Лиссабон, 1755","Сан-Франциско, 1906","Чили, 1960 (магнитуда 9,5)","Тохоку, Япония, 2011"],t:["Не бегите на лестницу и в лифт, отойдите от окон","Присядьте под прочный стол или встаньте в дверной проём несущей стены","На улице уйдите от зданий и проводов","После толчков отключите газ и электричество","Готовьте тревожный рюкзак с водой и аптечкой"],f:"Каждый год на Земле происходит около 500 000 землетрясений, но ощутимы лишь около 100 000."},
+{k:"tsunami",i:"🌊",n:"Цунами",d:"Серия длинных океанских волн, которые в открытом море почти незаметны, а у берега вырастают в десятки метров.",c:["Подводные землетрясения","Извержения подводных вулканов","Подводные оползни и падение метеоритов"],e:["Индийский океан, 2004","Тохоку и Фукусима, 2011","Кракатау, 1883"],t:["Сильный толчок у моря или резкий отлив означают: немедленно уходите на возвышенность","Не ждите официальной сирены","Поднимитесь минимум на 30 метров над уровнем моря или на 3 км вглубь суши","Не возвращайтесь: первая волна редко бывает последней","Не ходите смотреть на отступившее море"],f:"В открытом океане волна цунами движется со скоростью реактивного самолёта, около 800 км/ч."},
+{k:"hurricane",i:"🌀",n:"Ураган",d:"Гигантский тропический циклон с ветром свыше 120 км/ч, ливнями и штормовым нагоном воды.",c:["Тёплая вода океана выше 26 °C","Влажный воздух и низкое давление","Вращение Земли закручивает вихрь"],e:["Катрина, США, 2005","Хайян, Филиппины, 2013","Мария, Пуэрто-Рико, 2017"],t:["Следите за предупреждениями и эвакуируйтесь, если просят","Закройте окна и уберите вещи с балконов","Держитесь подальше от окон, укройтесь во внутренней комнате","Запаситесь водой и едой на 3 дня","Не выходите в «глаз бури»: затишье временное"],f:"Тихий центр урагана, его «глаз», может быть шириной 30–60 км, а вокруг него ветер самый сильный."},
+{k:"tornado",i:"🌪️",n:"Торнадо",d:"Узкий вращающийся столб воздуха, который тянется от грозового облака до земли. Живёт от минут до часа.",c:["Мощные грозовые суперячейки","Столкновение тёплого влажного и холодного сухого воздуха","Сдвиг ветра на разной высоте"],e:["Трёхштатный торнадо, США, 1925","Бангладеш, 1989","Эль-Рино, США, 2013"],t:["Спуститесь в подвал или внутреннюю комнату без окон","Накройте голову и шею руками или матрасом","В машине не пытайтесь обогнать торнадо: лучше лечь в низину","Держитесь подальше от лёгких построек","Следите за зеленоватым небом и градом"],f:"Скорость ветра в сильнейших торнадо превышает 480 км/ч. Это самый быстрый ветер на Земле."},
+{k:"volcano",i:"🌋",n:"Извержение вулкана",d:"Выброс магмы, пепла и газов из жерла вулкана. Бывает спокойным (лава течёт) и взрывным.",c:["Подъём магмы из мантии","Давление газов в магматической камере","Тектонические разломы и зоны субдукции"],e:["Везувий, 79 г. (Помпеи)","Кракатау, 1883","Пинатубо, 1991","Эйяфьятлайокудль, 2010"],t:["Выполняйте эвакуацию заранее, не ждите сильного извержения","От пепла защищайтесь респиратором и очками","Не ходите по долинам рек: там идут лахары","Закройте окна и вентиляцию, укройте воду","Пепел тяжёлый: очищайте с крыш"],f:"Извержение Тамборы в 1815 году вызвало «год без лета» по всей Земле."},
+{k:"flood",i:"🌧️",n:"Наводнение",d:"Затопление суши водой из-за переполнения рек, ливней или прорыва плотин. Самая частая природная катастрофа.",c:["Затяжные ливни","Быстрое таяние снега","Прорыв плотин и дамб","Штормовой нагон на побережье"],e:["Хуанхэ, Китай, 1931","Новый Орлеан, 2005","Пакистан, 2022"],t:["При угрозе поднимитесь выше и возьмите документы и воду","Отключите электричество и газ","Не заходите в поток: 30 см воды способны сдвинуть машину","Не пейте воду из-под крана до проверки","Знайте маршрут эвакуации"],f:"Всего 15 см быстрой воды могут сбить человека с ног."},
+{k:"wildfire",i:"🔥",n:"Лесной пожар",d:"Неконтролируемое горение лесов и степей, которое распространяется ветром и может охватить огромные территории.",c:["Сухая жара и засуха","Сильный ветер","Молнии, окурки, костры и поджоги"],e:["Пещерный пожар, США, 1871","Чёрная суббота, Австралия, 2009","Австралия, 2019–2020"],t:["При запахе дыма сразу сообщите спасателям","Уходите перпендикулярно ветру, к реке или дороге","Защитите дыхание влажной тканью","Не разводите костры в сухую погоду","Очистите участок у дома от сухой травы"],f:"Большой пожар создаёт собственный ветер и даже грозовые облака, называемые пирокумулюсами."},
+{k:"landslide",i:"⛰️",n:"Оползень",d:"Скольжение масс горных пород, грунта и грязи вниз по склону. Может быть медленным или внезапным.",c:["Сильные дожди и насыщение грунта водой","Землетрясения","Вырубка лесов и строительство на склонах"],e:["Вайонт, Италия, 1963","Армеро, Колумбия, 1985","Лейте, Филиппины, 2006"],t:["Тревожные знаки: трещины в земле, наклонённые деревья и мутные ручьи","Немедленно покиньте опасный склон","Уходите вбок от пути потока, а не вниз","Не селитесь у подножия крутых склонов","После оползня держитесь вдали: возможен повтор"],f:"Оползни бывают и подводными, и именно они могут вызвать цунами."},
+{k:"drought",i:"☀️",n:"Засуха",d:"Длительный период без осадков, когда не хватает воды для людей, растений и животных. Развивается медленно, но бьёт долго.",c:["Устойчивые области высокого давления","Колебания температуры океана (Эль-Ниньо)","Чрезмерный забор воды и изменение климата"],e:["Пыльный котёл, США, 1930-е","Сахель, Африка, 1970–1980-е","Африканский Рог, 2020–2023"],t:["Экономьте воду: капельный полив, сбор дождевой воды","Выбирайте засухоустойчивые культуры","Не разжигайте огонь на природе","Запасайте питьевую воду","Помогайте соседям, особенно пожилым"],f:"Засухи обычно приводят к большим потерям, чем многие бури, но почти не попадают в новости."},
+{k:"avalanche",i:"🏔️",n:"Снежная лавина",d:"Быстрый сход снежной массы по склону. Лавина может разогнаться до 100–300 км/ч.",c:["Свежий снегопад на слабом слое","Крутизна склона от 30° до 45°","Потепление, ветер и нагрузка от людей"],e:["Альпы, зима 1950–1951","Белая пятница, Тироль, 1916","Эверест, 2014 и 2015"],t:["Проверяйте бюллетень лавинной опасности","Берите маяк, зонд и лопату и умейте ими пользоваться","Не ходите в горы в одиночку","Если лавина сошла, плывите и пытайтесь удержаться у поверхности","Создайте перед лицом воздушную полость"],f:"Более 90% людей, откопанных в первые 15 минут, выживают, а позже шансы быстро падают."}
+];
+const grid=document.getElementById("grid"),card=document.getElementById("card"),panel=document.getElementById("panel");
+let cur=null;
+D.forEach(x=>{
+ const b=document.createElement("button");b.className="btn";b.dataset.k=x.k;b.setAttribute("aria-pressed","false");
+ b.innerHTML='<span class="ic" aria-hidden="true">'+x.i+'</span><span class="nm">'+x.n+'</span>';
+ b.onclick=()=>cur===x.k?close():show(x);grid.appendChild(b);
+});
+const li=a=>"<ul>"+a.map(s=>"<li>"+s+"</li>").join("")+"</ul>";
+function fill(x){
+ panel.innerHTML='<button class="x" aria-label="Закрыть">✕</button><h2><span aria-hidden="true">'+x.i+'</span>'+x.n+'</h2><p class="lead">'+x.d+'</p><div class="cols"><div><h3>Причины</h3>'+li(x.c)+'</div><div><h3>Известные случаи</h3>'+li(x.e)+'</div><div style="grid-column:1/-1"><h3>Как защитить себя</h3>'+li(x.t)+'</div><div class="fact"><h3>Интересный факт</h3><p>'+x.f+'</p></div></div>';
+ panel.querySelector(".x").onclick=close;
+}
+function mark(k){document.querySelectorAll(".btn").forEach(b=>{const on=b.dataset.k===k;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)})}
+function show(x){
+ const go=()=>{fill(x);cur=x.k;mark(x.k);card.classList.add("open");setTimeout(()=>card.scrollIntoView({behavior:"smooth",block:"nearest"}),120)};
+ if(cur){card.classList.remove("open");setTimeout(go,380)}else go();
+}
+function close(){card.classList.remove("open");cur=null;mark(null)}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&cur)close()});
+const sky=document.getElementById("sky");
+[[7,34,.5,150,110],[6,26,.7,230,70],[5,16,.9,340,40]].forEach((L,li)=>{
+ for(let j=0;j<L[0];j++){
+  const c=document.createElement("div");c.className="cloud";
+  const w=L[3]*(.7+Math.random()*.7);
+  c.style.cssText="width:"+w+"px;height:"+w*.26+"px;top:"+(Math.random()*(li===2?80:62)+(li===0?2:8))+"%;opacity:"+L[2]*(.7+Math.random()*.3)+";filter:blur("+(li===0?3:li===1?2:1)+"px);animation-duration:"+(L[4]*1.6+Math.random()*30)+"s;animation-delay:-"+Math.random()*L[4]*2+"s";
+  sky.appendChild(c);
+ }
+});
+</script>
+</body>
+</html>
